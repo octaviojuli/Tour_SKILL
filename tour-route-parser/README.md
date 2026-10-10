@@ -33,7 +33,7 @@
 | `scripts/run.py` | 单个文件或批量运行 |
 | `scripts/export_schema.py` | 重新导出 JSON Schema |
 | `reference/` | 原型页面、字段说明、样本模式 |
-| `tests/` | 虚构样本的单元测试（解析 37 个、标签 23 个），不调用模型 |
+| `tests/` | 虚构样本的单元测试（解析 37 个、单日回退 6 个、标签 23 个），不调用模型；`tests/test_live.py` 另有 SDK 参数检查和一个真实调用（`-m live`）；`tests/fixtures/` 放测试用的虚构附件及其生成脚本 |
 
 ## 标签阶段
 
@@ -75,6 +75,7 @@
 | `TYPE_FROM_SECTION` | 节点位于"自费推荐行程："这类标题下，已改为自费项目，请核对 |
 | `TEXT_NOT_IN_SOURCE` | 条款、提示、备注、替代安排、标题、国家等文字在原文中找不到，已删除 |
 | `NO_DAY_HEADERS` | 没有识别出天数标题，页面只显示原文 |
+| `SINGLE_DAY_FALLBACK` | 没有天数标题，但行程按钟点排列（或写明一日游、或登记为 1 天），且条款前没有多日字样：整段行程作为第 1 天 |
 | `PDF_PAGE_REORDERED` | 表格被读乱的页（天标签不递增），已按版式重读 |
 | `PDF_PAGE_UNORDERED` | 版式重读后顺序仍然错乱，这一页改用图片转写 |
 | `DAYS_SPLIT_BY_MODEL` | 规则找不到天数标签（标签是图形、竖排，或只有日期行），由模型按内容分天 |
@@ -120,6 +121,7 @@
 
 ```bash
 python -m pytest tests -q
+python -m pytest tests -q -m live          # 真实调用一次模型；需要 ANTHROPIC_API_KEY、ROUTE_KIT_MODEL，或 ROUTE_KIT_ENV=env 文件
 ```
 
-测试只用虚构样本，覆盖读取、图片占位与转写、切分、校验和渲染，不调用模型。
+测试只用虚构样本，覆盖读取、图片占位与转写、切分、单日回退、校验、标签和渲染；除 `-m live` 那一个真实调用外，都不调用模型。
