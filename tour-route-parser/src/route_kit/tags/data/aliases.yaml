@@ -1,0 +1,218 @@
+# Alias library: one canonical name per place or product name. Tags store the canonical name;
+# the raw string stays on the parser record. Edit by hand; the review page proposes new entries.
+# `version` is bumped by a person on every edit; the library also carries a content hash.
+version: 1
+entries:
+  # ---- countries and regions (continent drives the destination hierarchy) ----
+  - {canonical: 中国, kind: country, continent: 亚洲, aliases: [中国大陆, 大陆, 内地, China, PRC]}
+  - {canonical: 香港, kind: country, continent: 亚洲, region: 港澳台, aliases: [香港特别行政区, 港, Hong Kong, HK, HKG]}
+  - {canonical: 澳门, kind: country, continent: 亚洲, region: 港澳台, aliases: [澳门特别行政区, 澳, Macau, Macao, MFM]}
+  - {canonical: 台湾, kind: country, continent: 亚洲, region: 港澳台, aliases: [台湾地区, 台, Taiwan, TW]}
+  - {canonical: 日本, kind: country, continent: 亚洲, aliases: [Japan, JP]}
+  - {canonical: 韩国, kind: country, continent: 亚洲, aliases: [南韩, 大韩民国, Korea, South Korea, KR]}
+  - {canonical: 泰国, kind: country, continent: 亚洲, aliases: [Thailand, TH]}
+  - {canonical: 越南, kind: country, continent: 亚洲, aliases: [Vietnam, VN]}
+  - {canonical: 新加坡, kind: country, continent: 亚洲, aliases: [Singapore, SG, 狮城]}
+  - {canonical: 马来西亚, kind: country, continent: 亚洲, aliases: [大马, Malaysia, MY]}
+  - {canonical: 印度尼西亚, kind: country, continent: 亚洲, aliases: [印尼, Indonesia, ID]}
+  - {canonical: 菲律宾, kind: country, continent: 亚洲, aliases: [Philippines, PH]}
+  - {canonical: 柬埔寨, kind: country, continent: 亚洲, aliases: [Cambodia, KH]}
+  - {canonical: 老挝, kind: country, continent: 亚洲, aliases: [Laos, LA]}
+  - {canonical: 缅甸, kind: country, continent: 亚洲, aliases: [Myanmar, Burma]}
+  - {canonical: 尼泊尔, kind: country, continent: 亚洲, aliases: [Nepal]}
+  - {canonical: 斯里兰卡, kind: country, continent: 亚洲, aliases: [Sri Lanka, 锡兰]}
+  - {canonical: 马尔代夫, kind: country, continent: 亚洲, aliases: [马代, Maldives]}
+  - {canonical: 印度, kind: country, continent: 亚洲, aliases: [India]}
+  - {canonical: 阿联酋, kind: country, continent: 亚洲, aliases: [阿拉伯联合酋长国, UAE, United Arab Emirates]}
+  - {canonical: 土耳其, kind: country, continent: 亚洲, aliases: [Turkey, Türkiye]}
+  - {canonical: 格鲁吉亚, kind: country, continent: 亚洲, aliases: [Georgia]}
+  - {canonical: 哈萨克斯坦, kind: country, continent: 亚洲, aliases: [Kazakhstan]}
+  - {canonical: 乌兹别克斯坦, kind: country, continent: 亚洲, aliases: [Uzbekistan]}
+  - {canonical: 英国, kind: country, continent: 欧洲, aliases: [United Kingdom, UK, Great Britain, Britain, 大不列颠, 英格兰, England]}
+  - {canonical: 法国, kind: country, continent: 欧洲, aliases: [France, FR]}
+  - {canonical: 德国, kind: country, continent: 欧洲, aliases: [Germany, DE]}
+  - {canonical: 意大利, kind: country, continent: 欧洲, aliases: [Italy, IT]}
+  - {canonical: 西班牙, kind: country, continent: 欧洲, aliases: [Spain, ES]}
+  - {canonical: 葡萄牙, kind: country, continent: 欧洲, aliases: [Portugal, PT]}
+  - {canonical: 瑞士, kind: country, continent: 欧洲, aliases: [Switzerland, CH]}
+  - {canonical: 奥地利, kind: country, continent: 欧洲, aliases: [Austria, AT]}
+  - {canonical: 荷兰, kind: country, continent: 欧洲, aliases: [Netherlands, Holland, NL]}
+  - {canonical: 比利时, kind: country, continent: 欧洲, aliases: [Belgium, BE]}
+  - {canonical: 卢森堡, kind: country, continent: 欧洲, aliases: [Luxembourg]}
+  - {canonical: 希腊, kind: country, continent: 欧洲, aliases: [Greece, GR]}
+  - {canonical: 捷克, kind: country, continent: 欧洲, aliases: [捷克共和国, Czech, Czechia]}
+  - {canonical: 匈牙利, kind: country, continent: 欧洲, aliases: [Hungary]}
+  - {canonical: 波兰, kind: country, continent: 欧洲, aliases: [Poland]}
+  - {canonical: 克罗地亚, kind: country, continent: 欧洲, aliases: [Croatia]}
+  - {canonical: 斯洛文尼亚, kind: country, continent: 欧洲, aliases: [Slovenia]}
+  - {canonical: 挪威, kind: country, continent: 欧洲, aliases: [Norway, NO]}
+  - {canonical: 瑞典, kind: country, continent: 欧洲, aliases: [Sweden, SE]}
+  - {canonical: 丹麦, kind: country, continent: 欧洲, aliases: [Denmark, DK]}
+  - {canonical: 芬兰, kind: country, continent: 欧洲, aliases: [Finland, FI]}
+  - {canonical: 冰岛, kind: country, continent: 欧洲, aliases: [Iceland, IS]}
+  - {canonical: 爱尔兰, kind: country, continent: 欧洲, aliases: [Ireland, IE]}
+  - {canonical: 俄罗斯, kind: country, continent: 欧洲, aliases: [俄国, Russia, RU]}
+  - {canonical: 梵蒂冈, kind: country, continent: 欧洲, aliases: [Vatican, 梵帝冈]}
+  - {canonical: 摩纳哥, kind: country, continent: 欧洲, aliases: [Monaco]}
+  - {canonical: 列支敦士登, kind: country, continent: 欧洲, aliases: [Liechtenstein]}
+  - {canonical: 美国, kind: country, continent: 北美洲, aliases: [美利坚, USA, US, United States, America]}
+  - {canonical: 加拿大, kind: country, continent: 北美洲, aliases: [Canada, CA]}
+  - {canonical: 墨西哥, kind: country, continent: 北美洲, aliases: [Mexico]}
+  - {canonical: 古巴, kind: country, continent: 北美洲, aliases: [Cuba]}
+  - {canonical: 巴西, kind: country, continent: 南美洲, aliases: [Brazil, Brasil]}
+  - {canonical: 阿根廷, kind: country, continent: 南美洲, aliases: [Argentina]}
+  - {canonical: 智利, kind: country, continent: 南美洲, aliases: [Chile]}
+  - {canonical: 秘鲁, kind: country, continent: 南美洲, aliases: [Peru, Perú]}
+  - {canonical: 澳大利亚, kind: country, continent: 大洋洲, aliases: [澳洲, Australia, AU]}
+  - {canonical: 新西兰, kind: country, continent: 大洋洲, aliases: [纽西兰, New Zealand, NZ]}
+  - {canonical: 埃及, kind: country, continent: 非洲, aliases: [Egypt]}
+  - {canonical: 摩洛哥, kind: country, continent: 非洲, aliases: [Morocco]}
+  - {canonical: 南非, kind: country, continent: 非洲, aliases: [South Africa]}
+  - {canonical: 肯尼亚, kind: country, continent: 非洲, aliases: [Kenya]}
+  - {canonical: 毛里求斯, kind: country, continent: 非洲, aliases: [Mauritius]}
+  - {canonical: 南极, kind: country, continent: 南极洲, aliases: [南极洲, 南极半岛, Antarctica]}
+  # ---- cities (country drives visit-day aggregation) ----
+  - {canonical: 上海, kind: city, country: 中国, aliases: [魔都, 申城, Shanghai, SHA, PVG]}
+  - {canonical: 北京, kind: city, country: 中国, aliases: [帝都, Beijing, PEK, PKX]}
+  - {canonical: 广州, kind: city, country: 中国, aliases: [羊城, Guangzhou, CAN]}
+  - {canonical: 深圳, kind: city, country: 中国, aliases: [鹏城, Shenzhen, SZX]}
+  - {canonical: 成都, kind: city, country: 中国, aliases: [蓉城, Chengdu, CTU, TFU]}
+  - {canonical: 重庆, kind: city, country: 中国, aliases: [山城, Chongqing, CKG]}
+  - {canonical: 杭州, kind: city, country: 中国, aliases: [Hangzhou, HGH]}
+  - {canonical: 南京, kind: city, country: 中国, aliases: [金陵, Nanjing, NKG]}
+  - {canonical: 西安, kind: city, country: 中国, aliases: [长安, Xi'an, Xian, XIY]}
+  - {canonical: 昆明, kind: city, country: 中国, aliases: [春城, Kunming, KMG]}
+  - {canonical: 丽江, kind: city, country: 中国, aliases: [Lijiang]}
+  - {canonical: 大理, kind: city, country: 中国, aliases: [Dali]}
+  - {canonical: 三亚, kind: city, country: 中国, aliases: [Sanya, SYX]}
+  - {canonical: 海口, kind: city, country: 中国, aliases: [Haikou, HAK]}
+  - {canonical: 厦门, kind: city, country: 中国, aliases: [鹭岛, Xiamen, XMN]}
+  - {canonical: 桂林, kind: city, country: 中国, aliases: [Guilin, KWL]}
+  - {canonical: 张家界, kind: city, country: 中国, aliases: [Zhangjiajie]}
+  - {canonical: 乌鲁木齐, kind: city, country: 中国, aliases: [乌市, Urumqi, URC]}
+  - {canonical: 喀什, kind: city, country: 中国, aliases: [Kashgar, 喀什噶尔]}
+  - {canonical: 拉萨, kind: city, country: 中国, aliases: [Lhasa, LXA]}
+  - {canonical: 西宁, kind: city, country: 中国, aliases: [Xining]}
+  - {canonical: 兰州, kind: city, country: 中国, aliases: [Lanzhou]}
+  - {canonical: 哈尔滨, kind: city, country: 中国, aliases: [冰城, Harbin, HRB]}
+  - {canonical: 青岛, kind: city, country: 中国, aliases: [Qingdao, TAO]}
+  - {canonical: 武汉, kind: city, country: 中国, aliases: [Wuhan, WUH]}
+  - {canonical: 长沙, kind: city, country: 中国, aliases: [Changsha, CSX]}
+  - {canonical: 贵阳, kind: city, country: 中国, aliases: [Guiyang]}
+  - {canonical: 呼和浩特, kind: city, country: 中国, aliases: [呼市, Hohhot]}
+  - {canonical: 香港, kind: city, country: 香港, aliases: [Hong Kong]}
+  - {canonical: 澳门, kind: city, country: 澳门, aliases: [Macau, Macao]}
+  - {canonical: 台北, kind: city, country: 台湾, aliases: [Taipei, TPE]}
+  - {canonical: 高雄, kind: city, country: 台湾, aliases: [Kaohsiung]}
+  - {canonical: 东京, kind: city, country: 日本, aliases: [Tokyo, NRT, HND]}
+  - {canonical: 大阪, kind: city, country: 日本, aliases: [Osaka, KIX]}
+  - {canonical: 京都, kind: city, country: 日本, aliases: [Kyoto]}
+  - {canonical: 北海道, kind: city, country: 日本, aliases: [Hokkaido, 札幌, Sapporo]}
+  - {canonical: 冲绳, kind: city, country: 日本, aliases: [Okinawa, 那霸, Naha]}
+  - {canonical: 福冈, kind: city, country: 日本, aliases: [Fukuoka]}
+  - {canonical: 首尔, kind: city, country: 韩国, aliases: [汉城, Seoul, ICN]}
+  - {canonical: 济州, kind: city, country: 韩国, aliases: [济州岛, Jeju]}
+  - {canonical: 釜山, kind: city, country: 韩国, aliases: [Busan]}
+  - {canonical: 曼谷, kind: city, country: 泰国, aliases: [Bangkok, BKK]}
+  - {canonical: 普吉, kind: city, country: 泰国, aliases: [普吉岛, Phuket, HKT]}
+  - {canonical: 清迈, kind: city, country: 泰国, aliases: [Chiang Mai]}
+  - {canonical: 芭提雅, kind: city, country: 泰国, aliases: [芭堤雅, Pattaya]}
+  - {canonical: 苏梅岛, kind: city, country: 泰国, aliases: [苏梅, Koh Samui, Samui]}
+  - {canonical: 河内, kind: city, country: 越南, aliases: [Hanoi]}
+  - {canonical: 岘港, kind: city, country: 越南, aliases: [Da Nang, Danang]}
+  - {canonical: 芽庄, kind: city, country: 越南, aliases: [Nha Trang]}
+  - {canonical: 胡志明市, kind: city, country: 越南, aliases: [西贡, Ho Chi Minh City, Saigon]}
+  - {canonical: 富国岛, kind: city, country: 越南, aliases: [Phu Quoc]}
+  - {canonical: 新加坡, kind: city, country: 新加坡, aliases: [Singapore]}
+  - {canonical: 吉隆坡, kind: city, country: 马来西亚, aliases: [Kuala Lumpur, KL]}
+  - {canonical: 沙巴, kind: city, country: 马来西亚, aliases: [亚庇, 哥打京那巴鲁, Sabah, Kota Kinabalu]}
+  - {canonical: 巴厘岛, kind: city, country: 印度尼西亚, aliases: [巴厘, Bali, DPS]}
+  - {canonical: 长滩岛, kind: city, country: 菲律宾, aliases: [Boracay]}
+  - {canonical: 宿务, kind: city, country: 菲律宾, aliases: [Cebu]}
+  - {canonical: 暹粒, kind: city, country: 柬埔寨, aliases: [Siem Reap, 吴哥]}
+  - {canonical: 加德满都, kind: city, country: 尼泊尔, aliases: [Kathmandu]}
+  - {canonical: 科伦坡, kind: city, country: 斯里兰卡, aliases: [Colombo]}
+  - {canonical: 马累, kind: city, country: 马尔代夫, aliases: [Male, Malé]}
+  - {canonical: 迪拜, kind: city, country: 阿联酋, aliases: [Dubai, DXB]}
+  - {canonical: 阿布扎比, kind: city, country: 阿联酋, aliases: [Abu Dhabi]}
+  - {canonical: 伊斯坦布尔, kind: city, country: 土耳其, aliases: [Istanbul]}
+  - {canonical: 卡帕多奇亚, kind: city, country: 土耳其, aliases: [卡帕多西亚, Cappadocia]}
+  - {canonical: 伦敦, kind: city, country: 英国, aliases: [London, LHR]}
+  - {canonical: 爱丁堡, kind: city, country: 英国, aliases: [Edinburgh]}
+  - {canonical: 曼彻斯特, kind: city, country: 英国, aliases: [Manchester]}
+  - {canonical: 巴黎, kind: city, country: 法国, aliases: [Paris, CDG]}
+  - {canonical: 尼斯, kind: city, country: 法国, aliases: [Nice]}
+  - {canonical: 罗马, kind: city, country: 意大利, aliases: [Rome, Roma, FCO]}
+  - {canonical: 佛罗伦萨, kind: city, country: 意大利, aliases: [翡冷翠, Florence, Firenze]}
+  - {canonical: 威尼斯, kind: city, country: 意大利, aliases: [Venice, Venezia]}
+  - {canonical: 米兰, kind: city, country: 意大利, aliases: [Milan, Milano]}
+  - {canonical: 那不勒斯, kind: city, country: 意大利, aliases: [拿坡里, Naples, Napoli]}
+  - {canonical: 马德里, kind: city, country: 西班牙, aliases: [Madrid]}
+  - {canonical: 巴塞罗那, kind: city, country: 西班牙, aliases: [巴塞, Barcelona]}
+  - {canonical: 塞维利亚, kind: city, country: 西班牙, aliases: [Seville, Sevilla]}
+  - {canonical: 里斯本, kind: city, country: 葡萄牙, aliases: [Lisbon, Lisboa]}
+  - {canonical: 波尔图, kind: city, country: 葡萄牙, aliases: [Porto]}
+  - {canonical: 苏黎世, kind: city, country: 瑞士, aliases: [Zurich, Zürich]}
+  - {canonical: 卢塞恩, kind: city, country: 瑞士, aliases: [琉森, Lucerne, Luzern]}
+  - {canonical: 因特拉肯, kind: city, country: 瑞士, aliases: [Interlaken]}
+  - {canonical: 日内瓦, kind: city, country: 瑞士, aliases: [Geneva, Genève]}
+  - {canonical: 维也纳, kind: city, country: 奥地利, aliases: [Vienna, Wien]}
+  - {canonical: 萨尔茨堡, kind: city, country: 奥地利, aliases: [Salzburg]}
+  - {canonical: 阿姆斯特丹, kind: city, country: 荷兰, aliases: [Amsterdam, AMS]}
+  - {canonical: 布鲁塞尔, kind: city, country: 比利时, aliases: [Brussels, Bruxelles]}
+  - {canonical: 慕尼黑, kind: city, country: 德国, aliases: [Munich, München]}
+  - {canonical: 柏林, kind: city, country: 德国, aliases: [Berlin]}
+  - {canonical: 法兰克福, kind: city, country: 德国, aliases: [Frankfurt, FRA]}
+  - {canonical: 布拉格, kind: city, country: 捷克, aliases: [Prague, Praha]}
+  - {canonical: 布达佩斯, kind: city, country: 匈牙利, aliases: [Budapest]}
+  - {canonical: 雅典, kind: city, country: 希腊, aliases: [Athens]}
+  - {canonical: 圣托里尼, kind: city, country: 希腊, aliases: [圣岛, Santorini]}
+  - {canonical: 奥斯陆, kind: city, country: 挪威, aliases: [Oslo]}
+  - {canonical: 卑尔根, kind: city, country: 挪威, aliases: [Bergen]}
+  - {canonical: 特罗姆瑟, kind: city, country: 挪威, aliases: [Tromsø, Tromso]}
+  - {canonical: 斯德哥尔摩, kind: city, country: 瑞典, aliases: [Stockholm]}
+  - {canonical: 哥本哈根, kind: city, country: 丹麦, aliases: [Copenhagen]}
+  - {canonical: 赫尔辛基, kind: city, country: 芬兰, aliases: [Helsinki]}
+  - {canonical: 罗瓦涅米, kind: city, country: 芬兰, aliases: [Rovaniemi]}
+  - {canonical: 雷克雅未克, kind: city, country: 冰岛, aliases: [Reykjavik, Reykjavík]}
+  - {canonical: 莫斯科, kind: city, country: 俄罗斯, aliases: [Moscow]}
+  - {canonical: 圣彼得堡, kind: city, country: 俄罗斯, aliases: [St Petersburg, Saint Petersburg]}
+  - {canonical: 纽约, kind: city, country: 美国, aliases: [New York, NYC, JFK]}
+  - {canonical: 洛杉矶, kind: city, country: 美国, aliases: [Los Angeles, LA, LAX]}
+  - {canonical: 旧金山, kind: city, country: 美国, aliases: [三藩市, San Francisco, SFO]}
+  - {canonical: 拉斯维加斯, kind: city, country: 美国, aliases: [拉斯维加斯, Las Vegas, Vegas]}
+  - {canonical: 奥兰多, kind: city, country: 美国, aliases: [Orlando]}
+  - {canonical: 夏威夷, kind: city, country: 美国, aliases: [檀香山, Hawaii, Honolulu]}
+  - {canonical: 温哥华, kind: city, country: 加拿大, aliases: [Vancouver, YVR]}
+  - {canonical: 多伦多, kind: city, country: 加拿大, aliases: [Toronto]}
+  - {canonical: 悉尼, kind: city, country: 澳大利亚, aliases: [雪梨, Sydney, SYD]}
+  - {canonical: 墨尔本, kind: city, country: 澳大利亚, aliases: [Melbourne, MEL]}
+  - {canonical: 黄金海岸, kind: city, country: 澳大利亚, aliases: [Gold Coast]}
+  - {canonical: 凯恩斯, kind: city, country: 澳大利亚, aliases: [Cairns]}
+  - {canonical: 奥克兰, kind: city, country: 新西兰, aliases: [Auckland]}
+  - {canonical: 皇后镇, kind: city, country: 新西兰, aliases: [Queenstown]}
+  - {canonical: 开罗, kind: city, country: 埃及, aliases: [Cairo]}
+  - {canonical: 卢克索, kind: city, country: 埃及, aliases: [Luxor]}
+  - {canonical: 布宜诺斯艾利斯, kind: city, country: 阿根廷, aliases: [Buenos Aires]}
+  - {canonical: 乌斯怀亚, kind: city, country: 阿根廷, aliases: [Ushuaia]}
+  - {canonical: 利马, kind: city, country: 秘鲁, aliases: [Lima]}
+  - {canonical: 库斯科, kind: city, country: 秘鲁, aliases: [Cusco, Cuzco]}
+  # ---- cruise lines and ships ----
+  - {canonical: 皇家加勒比, kind: cruise_line, aliases: [皇家加勒比国际游轮, Royal Caribbean, RCI, RCCL]}
+  - {canonical: MSC地中海邮轮, kind: cruise_line, aliases: [地中海邮轮, MSC, MSC Cruises]}
+  - {canonical: 歌诗达, kind: cruise_line, aliases: [歌诗达邮轮, Costa, Costa Cruises]}
+  - {canonical: 公主邮轮, kind: cruise_line, aliases: [公主, Princess, Princess Cruises]}
+  - {canonical: 诺唯真, kind: cruise_line, aliases: [挪威邮轮, NCL, Norwegian Cruise Line]}
+  - {canonical: 爱达邮轮, kind: cruise_line, aliases: [爱达, Adora, Adora Cruises]}
+  - {canonical: 云顶梦号, kind: ship, line: 星梦邮轮, aliases: [Genting Dream]}
+  - {canonical: 海洋光谱号, kind: ship, line: 皇家加勒比, aliases: [光谱号, Spectrum of the Seas]}
+  - {canonical: 爱达魔都号, kind: ship, line: 爱达邮轮, aliases: [魔都号, Adora Magic City]}
+  - {canonical: MSC荣耀号, kind: ship, line: MSC地中海邮轮, aliases: [荣耀号, MSC Bellissima]}
+  # ---- entry documents and visa types ----
+  - {canonical: 免签, kind: visa_type, aliases: [免签证, 免签入境, visa-free, Visa Free]}
+  - {canonical: 落地签, kind: visa_type, aliases: [落地签证, visa on arrival, VOA]}
+  - {canonical: 电子签, kind: visa_type, aliases: [电子签证, e-visa, eVisa, ETA, 电子旅行授权]}
+  - {canonical: 贴纸签, kind: visa_type, aliases: [贴纸签证, 送签, 使馆签, 领馆签, 纸签]}
+  - {canonical: 港澳通行证, kind: entry_document, aliases: [往来港澳通行证, 港澳证, 港澳签注]}
+  - {canonical: 台湾通行证, kind: entry_document, aliases: [大陆居民往来台湾通行证, 大通证, 台湾证]}
+  - {canonical: 入台证, kind: entry_document, aliases: [入台许可证, 中华民国台湾地区入出境许可证]}
