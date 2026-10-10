@@ -7,7 +7,7 @@ name = "route-kit"
 version = "1.1.0"
 description = "Itinerary attachments (PDF, DOCX) to evidence-linked route content and a detail page"
 requires-python = ">=3.11"
-dependencies = ["pydantic>=2.6", "anthropic>=0.40", "pyyaml>=6"]
+dependencies = ["pydantic>=2.6", "anthropic>=0.40,<1.0", "pyyaml>=6"]
 
 [project.optional-dependencies]
 vision = ["Pillow>=10"]
@@ -17,3 +17,6 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 route_kit = ["templates/*.html", "tags/data/*.yaml", "tags/data/rules/*.yaml"]
+
+[tool.pytest.ini_options]
+markers = ["live: makes a real model call; needs ANTHROPIC_API_KEY and ROUTE_KIT_MODEL (or ROUTE_KIT_ENV)"]
