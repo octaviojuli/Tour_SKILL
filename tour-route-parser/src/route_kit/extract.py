@@ -44,7 +44,7 @@ from .models import (
     Source,
 )
 from .reader import Document, NotItinerary
-from .segment import DayBlock, Layout
+from .segment import TERMS, DayBlock, Layout
 
 PARSER = "route-kit-2"
 # Blank form fields and table headers: not itinerary content, never "risky".
@@ -235,6 +235,89 @@ def require_itinerary(layout: Layout, model: Model, name: str) -> None:
         return
     if answer.kind == "not_itinerary":
         raise NotItinerary()
+
+
+# A one-day sheet (一日游, 当地散拼) runs by the clock: "07:30 接客人 … 10:00 抵达 … 18:30 返回",
+# with no 第X天 label. Clock times and parts of the day, in minutes since midnight.
+CLOCK = re.compile(r"(?<![\d.])([01]?\d|2[0-3])\s*[:：]\s*([0-5]\d)(?!\d)")
+PART_OF_DAY = (
+    (re.compile(r"早上|清晨|早晨"), 7 * 60),
+    (re.compile(r"上午"), 9 * 60),
+    (re.compile(r"中午|午餐|午饭"), 12 * 60),
+    (re.compile(r"下午"), 14 * 60),
+    (re.compile(r"傍晚"), 18 * 60),
+    (re.compile(r"晚上|晚餐|晚饭"), 19 * 60),
+)
+# Anything that says the trip runs past one day sends the file to the model instead.
+MULTI_DAY = re.compile(
+    r"第\s*[2-9二两三四五六七八九十]\s*[天日]|次日|翌日|隔天"
+    r"|(?<![A-Za-z])(?:DAY|Day|day|D)\s*[-_ ]?0?[2-9](?!\d)"
+    r"|[2-9二两三四五六七八九十]\s*(?:日游|天游|天[一二两三四五六七八九十1-9]\s*晚|日[一二两三四五六七八九十1-9]\s*晚)"
+    r"|入住|住宿\s*[:：]\s*(?![无/／—\-]|\s*$)"
+)
+RESTART_MINUTES = 4 * 60
+ONE_DAY = re.compile(r"[一1]\s*日游|半日游|[一1]\s*天游|半天游|日归")
+PROGRAMME = re.compile(r"^(?:行程安排|行程介绍|参考行程|具体行程|行程)\s*[:：]?$")
+
+
+def _time_marks(text: str) -> list[int]:
+    marks = [int(h) * 60 + int(m) for h, m in CLOCK.findall(text)]
+    if not marks:
+        marks = [minutes for pattern, minutes in PART_OF_DAY if pattern.search(text)][:1]
+    return marks
+
+
+def single_day_fallback(layout: Layout, expected: int | None, issues: list[dict]) -> bool:
+    """No day label, and the sheet reads as one day: the programme becomes day 1.
+
+    One day means: nothing before the terms says the trip runs longer (次日, 第二天, D2, 二日游,
+    入住 …), and either the programme runs by the clock (three or more time marks, mostly in
+    order), or the sheet calls itself 一日游 / 半日游, or the listing registers one day. A file
+    registered for more than one day, or one that reads as longer, is left to the model split.
+    Day 1 runs from the first timed or programme line to the terms; what comes before is cover.
+    """
+    if expected and expected > 1:
+        return False
+    units = layout.units
+    terms = next(
+        (i for i, u in enumerate(units) if i > 0 and TERMS.search(re.sub(r"\s", "", u.text)[:14])),
+        len(units),
+    )
+    head = units[:terms]
+    if not head or any(MULTI_DAY.search(u.text) for u in head):
+        return False
+    start = next(
+        (
+            i
+            for i, u in enumerate(head)
+            if CLOCK.search(u.text) or PROGRAMME.match(re.sub(r"\s", "", u.text))
+        ),
+        0,
+    )
+    body = head[start:]
+    marks = [m for u in body for m in _time_marks(u.text)]
+    pairs = list(zip(marks, marks[1:], strict=False))
+    ordered = sum(1 for a, b in pairs if b >= a)
+    # The clock going back hours (18:30 … 08:00) is a new morning: several days, labels unread.
+    restarts = any(a - b > RESTART_MINUTES for a, b in pairs)
+    by_clock = len(marks) >= 3 and ordered >= 0.75 * len(pairs) and not restarts
+    said = any(ONE_DAY.search(u.text) for u in head)
+    if len(body) < 2 or not (by_clock or said or expected == 1):
+        return False
+    first = body[0].id
+    layout.days = [DayBlock(1, None, first, [u.id for u in body])]
+    layout.outside = [u.id for u in units if u.id < first or u.id > body[-1].id]
+    layout.method = "single_day"
+    issues[:] = [i for i in issues if i["code"] != "NO_DAY_HEADERS"]
+    reason = "按时间顺序" if by_clock else ("原文写明一日游" if said else "登记为 1 天")
+    issues.append(
+        {
+            "code": "SINGLE_DAY_FALLBACK",
+            "path": "days",
+            "detail": f"无天数标题，{reason}，整份行程作为第 1 天",
+        }
+    )
+    return True
 
 
 def split_days_by_model(
@@ -1022,7 +1105,8 @@ def extract(
 
     if not layout.days:
         require_itinerary(layout, model, meta.get("name", ""))
-        split_days_by_model(layout, model, meta.get("days"), issues)
+        if not single_day_fallback(layout, meta.get("days"), issues):
+            split_days_by_model(layout, model, meta.get("days"), issues)
     blocks = layout.days
     if doc.media == "pdf" and layout.method != "model":
         refine_pdf_days(layout, model, issues)
