@@ -19,8 +19,9 @@ def _embed(data: dict) -> str:
     return json.dumps(data, ensure_ascii=False).replace("<", "\\u003c")
 
 
-def page(content: dict, cover: bytes | None = None) -> str:
-    """The detail page; ``cover`` (JPEG) is embedded as the hero picture."""
+def page(content: dict, cover: bytes | None = None, tags: dict | None = None) -> str:
+    """The detail page; ``cover`` (JPEG) is embedded as the hero picture, ``tags`` (the
+    route-tags record) feeds the review view's tags panel."""
     template = (TEMPLATES / "route.html").read_text()
     head, _, rest = template.partition("__TITLE__")
     body, _, tail = rest.partition("__DATA__")
@@ -28,11 +29,13 @@ def page(content: dict, cover: bytes | None = None) -> str:
     data = dict(content)
     if cover:
         data["cover_data"] = "data:image/jpeg;base64," + base64.b64encode(cover).decode()
+    if tags:
+        data["tags"] = tags
     return head + title + body + _embed(data) + tail
 
 
-def write_route(path: Path, content: dict, cover: bytes | None = None) -> None:
-    path.write_text(page(content, cover))
+def write_route(path: Path, content: dict, cover: bytes | None = None, tags: dict | None = None) -> None:
+    path.write_text(page(content, cover, tags))
 
 
 def write_missing(path: Path, entry: dict) -> None:

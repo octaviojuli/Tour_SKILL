@@ -17,12 +17,29 @@
 | `src/route_kit/models.py` | 数据契约 `RouteContent`（`schema: route-kit/1`） |
 | `src/route_kit/render.py` | 详情页和索引页渲染 |
 | `src/route_kit/templates/route.html` | 详情页模板：数据内嵌，不加载任何外部资源（随包安装） |
+| `src/route_kit/tags/models.py` | 标签契约 `RouteTags`（`schema: route-tags/1`）、修正事件 `Correction` |
+| `src/route_kit/tags/library.py` | 别名库、词表、查表、主/辅/已提升规则的加载与版本号 |
+| `src/route_kit/tags/dates.py` | 出发日期解析（日期列表、每周、天天发团、区间） |
+| `src/route_kit/tags/rules.py` | 规则族：骨架、团期、产品类型、吃住行游娱购、服务保障、价格原文、邮轮、落地散拼 |
+| `src/route_kit/tags/llm_tags.py` | 模型判断的维度（主题、人群、特色餐住、体验、岸上观光），封闭词表与引语核对 |
+| `src/route_kit/tags/dual.py` | 辅助规则求值、冲突记录、shadow 对照金标、promote / rollback |
+| `src/route_kit/tags/review.py` | 修正事件的记录与应用、辅助规则提案、批次报告 |
+| `src/route_kit/tags/engine.py` | 打标签入口 `tag_route`，版本记录与 stale 判断 |
+| `src/route_kit/tags/data/` | `aliases.yaml`、`vocabulary.yaml`、`lookups.yaml`、`rules/main.yaml`、`rules/aux.yaml` |
+| `scripts/tags.py` | 审核侧命令：correct / confirm / fix-upstream / gold / report / aux |
+| `schema/route-tags.schema.json` | 由 `tags/models.py` 导出的标签 JSON Schema |
 | `pyproject.toml` | 安装为 `route-kit` 包：`pip install ".[vision]"` |
 | `schema/route-content.schema.json` | 由 `models.py` 导出的 JSON Schema |
 | `scripts/run.py` | 单个文件或批量运行 |
 | `scripts/export_schema.py` | 重新导出 JSON Schema |
 | `reference/` | 原型页面、字段说明、样本模式 |
-| `tests/` | 虚构样本的单元测试，不调用模型 |
+| `tests/` | 虚构样本的单元测试（解析 37 个、标签 23 个），不调用模型 |
+
+## 标签阶段
+
+`run.py --tag`（或 `--tag-only`）在解析之后生成 `routes/<code>.tags.json`，并把标签嵌进审核看视图。用法、范围规则、双轨规则和审核流程见 [SKILL.md](SKILL.md) 的"标签阶段"。
+
+标签记录要点：`route[]` 是线路级标签，`departures[]` 是按出发日期的时间标签；每个标签带 `scope`、`origin`（rule / llm / aux）、`evidence`（`cite`、`quote`、`rule`、`lookups`、`derived_from`）、`review`（auto_accepted / needs_review / confirmed / corrected）；`tagged_with` 记下产生它的所有版本，`stale` 表示任一版本已变。
 
 ## 数据契约要点
 

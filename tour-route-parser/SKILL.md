@@ -80,6 +80,27 @@ python scripts/run.py --corpus /private/corpus --out /private/out --render-only
 
 设计依据见 `reference/`。
 
+## 标签阶段
+
+解析之后可选的一步，把线路整理成检索用的结构化标签（`schema: route-tags/1`，设计见 Route Tagging Design v2）。标签记录单独存在 `routes/<code>.tags.json`，不改解析契约；重打标签不用重新解析。
+
+```bash
+python scripts/run.py --corpus /private/corpus --out /private/out --env /private/model.env --tag
+python scripts/run.py --corpus /private/corpus --out /private/out --tag-only            # 只重打标签，不调模型
+python scripts/run.py --corpus /private/corpus --out /private/out --tag-only --env /private/model.env   # 含模型判断的维度
+```
+
+- **范围**：每个标签带 `scope`（通用 / 出境 / 国内 / 邮轮）。市场由已验证的国家决定，港澳台按出境；签证维度按目的地分支（外国 → `visa`，港澳台 → `entry_document`）；5A 只在国内；邮轮维度只在 `product_type=邮轮`。不适用范围的标签不计算、不存储。
+- **规则与模型**：客观事实由规则从已验证的解析字段计算（天数、目的地及游览天数权重、产品类型、含餐与住宿、购物与自费、导游语言、保险、团期）；主观判断由模型在**封闭词表**（`tags/data/vocabulary.yaml`）里选词，每个词带引用和逐字 `quote`，代码只核对 quote 在引用的原文里。模型标签一律 `needs_review`。
+- **三态**：布尔标签只有 `true / false / unknown`，缺省永远是 `unknown`。纯玩只在 `shopping_status=none` 且有核实过的引语时为真；零自费只在自费计数为 0、`optional_items` 为空、且没有未关闭的 `TYPE_CHECK` 类问题时为真。
+- **团期**：时间标签按出发日期逐条计算（`departures[]`：节假日、季节、周末）；只有日期区间时写 `can_depart_in` 弱标签。
+- **价格**：只存原文金额和币种，不分档；分档在检索时按门店零售价算。
+- **产品类型**：结构判断 > 登记值 > 标题。登记值与结构判断不一致时记 `PRODUCT_TYPE_MISMATCH`，进评审队列。
+- **版本**：每条记录的 `tagged_with` 记下主规则、辅助规则、词表、别名库、查表、提示词、模型、解析器版本；任一变化都标 `stale`，`--tag-only` 重打。
+- **双轨规则**：`tags/data/rules/main.yaml` 是人维护的阈值；`aux.yaml` 是技能从人工修正里提出的辅助规则（先 shadow，不写入正式记录；达标后转 live；`promote` 后进入 `promoted.yaml` 作为主规则）。主辅冲突时主规则生效并记入 `conflicts`。
+- **人工审核**：审核看视图里有"标签"面板，默认只显示待审。修正用 `scripts/tags.py correct|confirm|fix-upstream` 追加到 `tags/corrections.jsonl`，`fix-upstream` 的问题转给解析器，不计入规则统计。每批生成 `tags/report.md`：新词与别名候选、规则修正统计、辅助规则提案与 shadow 对照金标、冲突、未标注占比。
+- **金标集**：`scripts/tags.py gold` 把人工确认或修正过的线路写成 `tags/gold/<code>.gold.json`，是 shadow 规则和所有版本变更的回归基准。
+
 ## 审核要点
 
 交付或审核时说明以下内容：

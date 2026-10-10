@@ -454,3 +454,14 @@ def test_tags_record_round_trips_as_json(lib):
     assert data["schema"] == "route-tags/1" and data["tagged_with"]["parser_schema"] == "route-kit/1"
     again = RouteTags.model_validate(data)
     assert again.get("pure_play").evidence.quote == "无购物"
+
+
+def test_page_embeds_tags_for_the_review_view(lib):
+    from route_kit.render import page
+
+    tags = tag_route(london(), LISTING, lib)
+    content = json.loads(london().model_dump_json(by_alias=True))
+    html = page(content, tags=json.loads(tags.model_dump_json(by_alias=True)))
+    assert '"tags"' in html and "renderTags" in html and "</script>" not in html.split("__DATA__")[0][-5:]
+    assert "<" not in html.split('id="data">')[1].split("</script>")[0]  # embedded data cannot close the block
+    assert "renderTags" in page(content)  # a page without tags still carries the panel code
