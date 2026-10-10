@@ -2,7 +2,7 @@
 # so a later edit here marks earlier tags stale instead of silently changing them.
 # Holiday windows follow the State Council notice for each year; a person confirms each year's
 # rows when the notice is published and bumps `version`.
-version: 1
+version: 2
 holidays:
   # Fixed-window holidays apply every year; dated ones are listed per year.
   fixed:
