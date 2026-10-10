@@ -637,9 +637,7 @@ def entry_documents(ctx: Ctx, destinations: list[dict]) -> None:
         found = []
         for text, cite in texts:
             for kind in ("免签", "落地签", "电子签", "贴纸签"):
-                place = lib.canonical(kind, "visa_type")
-                aliases = [a for (k, a), c in lib._index.items() if k == "visa_type" and c == place]
-                if any(a in _norm(text) for a in aliases):
+                if any(a in _norm(text) for a in lib.spellings(kind, "visa_type")):
                     found.append((kind, text, cite))
         if found:
             kinds = []
@@ -656,9 +654,7 @@ def entry_documents(ctx: Ctx, destinations: list[dict]) -> None:
         found = []
         for text, cite in texts:
             for kind in ("港澳通行证", "台湾通行证", "入台证"):
-                place = lib.canonical(kind, "entry_document")
-                aliases = [a for (k, a), c in lib._index.items() if k == "entry_document" and c == place]
-                if any(a in _norm(text) for a in aliases):
+                if any(a in _norm(text) for a in lib.spellings(kind, "entry_document")):
                     found.append((kind, text, cite))
         kinds = []
         for k, _, _ in found:

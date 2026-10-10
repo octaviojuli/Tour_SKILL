@@ -7,6 +7,7 @@ parser issue list. Patterns in the remaining corrections become auxiliary-rule p
 
 from __future__ import annotations
 
+import hashlib
 import json
 from collections import Counter, defaultdict
 from datetime import UTC, datetime
@@ -114,7 +115,8 @@ def propose_aux_rules(
             background = sum(1 for f in others if f.get(name) == val) / len(others) if others else 0.0
             if background > max_bg:
                 continue
-            rule_id = f"aux-{key}-{abs(hash((name, val_json, value_json))) % 10**6}"
+            digest = hashlib.sha256(f"{name}|{val_json}|{value_json}".encode()).hexdigest()[:6]
+            rule_id = f"aux-{key}-{digest}"
             if rule_id in existing_ids:
                 continue
             proposals.append(

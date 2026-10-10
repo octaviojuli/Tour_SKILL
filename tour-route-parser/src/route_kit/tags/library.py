@@ -74,6 +74,10 @@ class Aliases:
     def place(self, canonical: str, kind: str) -> Place | None:
         return self.entries.get((kind, canonical))
 
+    def spellings(self, canonical: str, kind: str) -> list[str]:
+        """Every normalised spelling (canonical and aliases) of one entry."""
+        return [alias for (k, alias), c in self._index.items() if k == kind and c == canonical]
+
     def country_of_city(self, city: str) -> str:
         place = self.place(city, "city")
         return place.country if place else ""
