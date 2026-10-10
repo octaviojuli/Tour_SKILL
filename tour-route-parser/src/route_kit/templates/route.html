@@ -390,7 +390,7 @@ function renderPanel(){
      <div class="box ${di.length?"warn":""}"><b>本日自动校验</b>${di.length?di.map(x=>`<span>${esc(x.code)} ${esc(x.path)} ${esc(x.detail)}</span>`).join(""):`<span class="hint">没有问题</span>`}</div>
      <div class="box ${risky.length?"danger":""}"><b>未归入的高风险原文 ${risky.length} 条</b>${risky.slice(0,12).map(u=>`<span>#${u.unit} ${esc(u.text.slice(0,80))}</span>`).join("")||`<span class="hint">没有</span>`}</div>
      <details class="box"><summary><b>读取时删除的页眉页脚、页码 ${removed.length} 行</b></summary>${removed.slice(0,60).map(x=>`<span>第${x.page??"?"}页 · ${esc(x.reason)} · ${esc(x.text)}</span>`).join("")||`<span class="hint">没有</span>`}</details>
-     <div class="box"><b>全部问题</b>${q.issues.filter(x=>!x.path.startsWith("D")).map(x=>`<span>${esc(x.code)} ${esc(x.detail)}</span>`).join("")||`<span class="hint">没有全局问题</span>`}</div>`;
+     <div class="box"><b>全部问题</b>${q.issues.filter(x=>!x.path.startsWith("D")).map(x=>`<span>${esc(x.code)} ${esc(x.detail)}</span>`).join("")||`<span class="hint">没有全局问题</span>`}</div>`+renderTags();
   } else {
     const on=new Set(sel&&sel.d===cur?cites(d.items[sel.i]):[]); const cited=new Set();d.items.forEach(n=>cites(n).forEach(x=>cited.add(x)));["breakfast","lunch","dinner"].forEach(m=>d.meals[m].cite.forEach(x=>cited.add(x)));d.stay.cite.forEach(x=>cited.add(x));d.notes.forEach(n=>n.cite.forEach(x=>cited.add(x)));
     const ids=[...d.units,...(d.overview_units||[])];
@@ -398,6 +398,27 @@ function renderPanel(){
      <div class="raw" id="rawbox">${ids.map(i=>`<p class="${on.has(i)?"on":cited.has(i)?"cited":""} ${U[i]?.origin==="image"?"img":""}"><small>#${i}${U[i]?.page?" · 第"+U[i].page+"页":""}</small>${esc(U[i]?.text)}</p>`).join("")}</div>`;
   }
   $("#panel").innerHTML=h;
+  const tt=$("#tagsToggle"); if(tt)tt.onclick=e=>{e.preventDefault();tagsAll=!tagsAll;renderPanel();};
+}
+let tagsAll=false;
+function tagValue(v){if(v==="unknown")return`<span class="mw">未标注</span>`;if(v===true)return"是";if(v===false)return"否";if(Array.isArray(v))return v.length?v.map(x=>typeof x==="object"?esc(Object.values(x).filter(y=>y!==""&&y!==0).join(" · ")):esc(x)).join("；"):`<span class="mw">空</span>`;if(typeof v==="object"&&v)return esc(JSON.stringify(v));return esc(v);}
+function renderTags(){
+  const G=R.tags; if(!G)return`<div class="box"><b>标签</b><span class="hint">这条线路还没有运行标签阶段（run.py --tag）。</span></div>`;
+  const rows=G.route.filter(t=>tagsAll||t.review==="needs_review"||t.origin!=="rule");
+  const pending=G.route.filter(t=>t.review==="needs_review").length;
+  const row=t=>`<tr><td><code>${esc(t.key)}</code><div class="hint">${esc(t.scope)} · ${esc(t.origin)}${t.note?" · "+esc(t.note):""}</div></td><td>${tagValue(t.value)}${t.evidence.quote?`<div class="hint">“${esc(t.evidence.quote.slice(0,60))}”</div>`:""}</td><td class="hint">${(t.evidence.cite||[]).slice(0,6).map(i=>"#"+i).join(" ")}<div>${esc(t.review)}</div></td></tr>`;
+  const deps=G.departures.map(d=>`<span>${esc(d.date)}：${d.tags.map(t=>`${esc(t.key)}=${tagValue(t.value)}`).join("，")}</span>`).join("");
+  const props=G.proposals.map(p=>`<span>${esc(p.kind==="vocab"?"新词":"别名")} ${esc(p.term)}${p.dimension?"（"+esc(p.dimension)+"）":""}${p.alias_kind?"（"+esc(p.alias_kind)+"）":""} ×${p.frequency}${p.evidence.quote?" “"+esc(p.evidence.quote.slice(0,40))+"”":""}</span>`).join("");
+  const conf=G.conflicts.map(c=>`<span>${esc(c.key)}：主 ${tagValue(c.main_value)} / 辅 ${tagValue(c.aux_value)}（${esc(c.aux_rule)}）</span>`).join("");
+  const mism=(G.issues||[]).filter(x=>x.code==="PRODUCT_TYPE_MISMATCH").map(x=>`<span>${esc(x.detail)}</span>`).join("");
+  return`<details class="box ${pending?"warn":""}" open><summary><b>标签 · 待审 ${pending} / ${G.route.length}${G.stale?" · 版本过期":""}</b> <span class="hint">${esc(G.market)} · ${esc(G.product_type)}</span></summary>
+    <p class="hint"><a href="#" id="tagsToggle">${tagsAll?"只看待审":"显示全部标签"}</a>${G.stale?" · 过期原因："+esc(G.stale_reasons.join("；")):""}</p>
+    <div class="tw"><table class="t"><tr><th>标签</th><th>值</th><th>依据 / 状态</th></tr>${rows.map(row).join("")||`<tr><td colspan="3" class="hint">没有待审标签</td></tr>`}</table></div>
+    ${deps?`<b>出发日期标签</b>${deps}`:`<span class="hint">没有解析出具体出发日期</span>`}
+    ${props?`<b>词表与别名候选</b>${props}`:""}
+    ${conf?`<b>主/辅规则冲突（主规则生效）</b>${conf}`:""}
+    ${mism?`<b>产品类型与登记不一致</b>${mism}`:""}
+  </details>`;
 }
 function renderAll(center=true){
   document.body.dataset.view=view;

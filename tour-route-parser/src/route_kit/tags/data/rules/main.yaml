@@ -1,0 +1,43 @@
+# Main rules: thresholds and windows a person owns. The skill reads them and never writes them.
+# Bump `version` on every edit; every route tagged under an older version becomes stale.
+version: 1
+
+market:
+  # 港澳台 counts as 出境 (industry convention, owner decision 2026-10-10).
+  hk_mo_tw_is_outbound: true
+
+product_type:
+  # free-day share thresholds (free days / days with a known kind)
+  自由行_min_free_ratio: 0.8
+  半自助_min_free_ratio: 0.3
+  # listing precedence: structural > listing > title (owner decision 2026-10-10)
+  listing_overrides_structure: false
+
+red_eye:
+  start: "23:00"
+  end: "06:00"
+
+meals:
+  # share of meals with a known status before a ratio is tagged
+  min_coverage: 0.6
+
+hotel_tier:
+  经济: {max_stars: 2}
+  舒适: {min_stars: 3, max_stars: 4}
+  豪华: {min_stars: 5}
+
+local:
+  # a single-day route is 半日 when its items say so or span under this many hours
+  half_day_max_hours: 6
+
+aux_proposals:
+  # a correction pattern becomes an auxiliary-rule proposal at these counts
+  min_cases: 5
+  min_rate: 0.6
+  max_background_rate: 0.3
+
+shadow:
+  # an auxiliary rule goes live when it agrees with the gold set at least this often
+  min_gold_agreement: 0.9
+  # and keeps a correction rate below this over the next batch
+  max_correction_rate: 0.1

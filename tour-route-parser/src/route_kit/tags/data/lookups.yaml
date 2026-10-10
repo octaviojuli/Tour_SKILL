@@ -1,0 +1,39 @@
+# Pinned lookup tables. Every tag that reads one records "lookups@<version>" in its evidence,
+# so a later edit here marks earlier tags stale instead of silently changing them.
+# Holiday windows follow the State Council notice for each year; a person confirms each year's
+# rows when the notice is published and bumps `version`.
+version: 1
+holidays:
+  # Fixed-window holidays apply every year; dated ones are listed per year.
+  fixed:
+    国庆: {start: "10-01", end: "10-07"}
+    暑期: {start: "07-01", end: "08-31"}
+    寒假: {start: "01-15", end: "02-28"}
+  dated:
+    2026:
+      春节: {start: "2026-02-15", end: "2026-02-23"}
+      清明: {start: "2026-04-04", end: "2026-04-06"}
+      五一: {start: "2026-05-01", end: "2026-05-05"}
+      端午: {start: "2026-06-19", end: "2026-06-21"}
+      中秋: {start: "2026-09-25", end: "2026-09-27"}
+    2027:
+      春节: {start: "2027-02-05", end: "2027-02-11"}
+      清明: {start: "2027-04-03", end: "2027-04-05"}
+      五一: {start: "2027-05-01", end: "2027-05-05"}
+      端午: {start: "2027-06-09", end: "2027-06-11"}
+      中秋: {start: "2027-09-15", end: "2027-09-17"}
+seasons:
+  春: [3, 4, 5]
+  夏: [6, 7, 8]
+  秋: [9, 10, 11]
+  冬: [12, 1, 2]
+cruise_regions:
+  # canonical country or port name -> region label
+  日韩: [日本, 韩国]
+  东南亚: [越南, 泰国, 新加坡, 马来西亚, 菲律宾, 印度尼西亚, 柬埔寨]
+  港澳台: [香港, 澳门, 台湾]
+  地中海: [意大利, 西班牙, 法国, 希腊, 克罗地亚, 摩纳哥, 土耳其]
+  北欧峡湾: [挪威, 丹麦, 瑞典, 芬兰, 冰岛]
+  加勒比: [美国, 墨西哥, 古巴]
+  阿拉斯加: [加拿大]
+  南极: [南极, 阿根廷, 智利]

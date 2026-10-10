@@ -1,0 +1,86 @@
+# Closed vocabulary for the LLM-judged dimensions. The model may only pick words listed here,
+# in a dimension whose scope matches the route. New words enter through the proposal queue
+# and a human's approval; removal is deprecation (the word keeps resolving on old tags).
+version: 1
+dimensions:
+  theme:
+    cardinality: multi
+    words:
+      - {word: 海岛, group: nature, scope: 通用}
+      - {word: 湖泊, group: nature, scope: 通用}
+      - {word: 山岳, group: nature, scope: 通用}
+      - {word: 极光, group: nature, scope: 通用}
+      - {word: 红叶, group: nature, scope: 通用}
+      - {word: 樱花, group: nature, scope: 通用}
+      - {word: 草原, group: nature, scope: 通用}
+      - {word: 沙漠, group: nature, scope: 通用}
+      - {word: 历史文化, group: culture, scope: 通用}
+      - {word: 博物馆, group: culture, scope: 通用}
+      - {word: 世界遗产, group: culture, scope: 通用}
+      - {word: 宗教, group: culture, scope: 通用}
+      - {word: 古镇, group: culture, scope: 国内}
+      - {word: 美食, group: experience, scope: 通用}
+      - {word: 摄影, group: experience, scope: 通用}
+      - {word: 网红打卡, group: experience, scope: 通用}
+      - {word: 温泉, group: experience, scope: 通用}
+      - {word: 滑雪, group: experience, scope: 通用}
+      - {word: 潜水, group: experience, scope: 通用}
+      - {word: 冲浪, group: experience, scope: 通用}
+      - {word: 徒步, group: experience, scope: 通用}
+      - {word: 骑行, group: experience, scope: 通用}
+      - {word: 骑马, group: experience, scope: 通用}
+      - {word: 自驾, group: experience, scope: 通用}
+      - {word: 露营, group: experience, scope: 通用}
+      - {word: 游船, group: experience, scope: 通用}
+      - {word: 夜游, group: experience, scope: 通用}
+      - {word: 主题乐园, group: parks_shows, scope: 通用}
+      - {word: 演出秀, group: parks_shows, scope: 通用}
+      - {word: 研学, group: special, scope: 通用}
+      - {word: 康养, group: special, scope: 通用}
+      - {word: 旅拍, group: special, scope: 通用}
+      - {word: 岸上观光, group: cruise, scope: 邮轮}
+      - {word: 海上娱乐, group: cruise, scope: 邮轮}
+  audience_fit:
+    cardinality: multi
+    words:
+      - {word: 亲子, scope: 通用}
+      - {word: 情侣/蜜月, scope: 通用}
+      - {word: 老年, scope: 通用}
+      - {word: 青年/闺蜜, scope: 通用}
+      - {word: 家庭, scope: 通用}
+      - {word: 团建/公司, scope: 通用}
+  featured_meals:
+    cardinality: multi
+    words:
+      - {word: 海鲜, scope: 通用}
+      - {word: 火锅, scope: 通用}
+      - {word: 自助, scope: 通用}
+      - {word: 特色餐, scope: 通用}
+      - {word: 米其林, scope: 通用}
+      - {word: 烧烤, scope: 通用}
+      - {word: 下午茶, scope: 通用}
+  featured_stay:
+    cardinality: multi
+    words:
+      - {word: 海景房, scope: 通用}
+      - {word: 温泉酒店, scope: 通用}
+      - {word: 民宿, scope: 通用}
+      - {word: 古堡/庄园, scope: 通用}
+      - {word: 度假村, scope: 通用}
+      - {word: 冰屋/玻璃屋, scope: 通用}
+      - {word: 水上屋, scope: 通用}
+  hands_on:
+    cardinality: multi
+    words:
+      - {word: 手作体验, scope: 通用}
+      - {word: 烹饪课, scope: 通用}
+      - {word: 民俗体验, scope: 通用}
+      - {word: 采摘, scope: 通用}
+      - {word: 动物互动, scope: 通用}
+  shore_excursion:
+    cardinality: multi
+    words:
+      - {word: 含岸上观光, scope: 邮轮}
+      - {word: 自费岸上观光, scope: 邮轮}
+      - {word: 自由上岸, scope: 邮轮}
+deprecated: []

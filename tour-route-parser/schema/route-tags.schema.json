@@ -1,0 +1,364 @@
+{
+ "$defs": {
+  "DepartureTags": {
+   "properties": {
+    "date": {
+     "format": "date",
+     "title": "Date",
+     "type": "string"
+    },
+    "source": {
+     "default": "explicit",
+     "enum": [
+      "explicit",
+      "sailing",
+      "agreed"
+     ],
+     "title": "Source",
+     "type": "string"
+    },
+    "tags": {
+     "items": {
+      "$ref": "#/$defs/Tag"
+     },
+     "title": "Tags",
+     "type": "array"
+    }
+   },
+   "required": [
+    "date"
+   ],
+   "title": "DepartureTags",
+   "type": "object"
+  },
+  "Evidence": {
+   "properties": {
+    "cite": {
+     "items": {
+      "type": "integer"
+     },
+     "title": "Cite",
+     "type": "array"
+    },
+    "quote": {
+     "default": "",
+     "title": "Quote",
+     "type": "string"
+    },
+    "rule": {
+     "default": "",
+     "title": "Rule",
+     "type": "string"
+    },
+    "lookups": {
+     "items": {
+      "type": "string"
+     },
+     "title": "Lookups",
+     "type": "array"
+    },
+    "derived_from": {
+     "items": {
+      "type": "string"
+     },
+     "title": "Derived From",
+     "type": "array"
+    }
+   },
+   "title": "Evidence",
+   "type": "object"
+  },
+  "Proposal": {
+   "properties": {
+    "kind": {
+     "enum": [
+      "vocab",
+      "alias"
+     ],
+     "title": "Kind",
+     "type": "string"
+    },
+    "term": {
+     "title": "Term",
+     "type": "string"
+    },
+    "definition": {
+     "default": "",
+     "title": "Definition",
+     "type": "string"
+    },
+    "dimension": {
+     "default": "",
+     "title": "Dimension",
+     "type": "string"
+    },
+    "scope": {
+     "default": "通用",
+     "enum": [
+      "通用",
+      "出境",
+      "国内",
+      "邮轮"
+     ],
+     "title": "Scope",
+     "type": "string"
+    },
+    "suggested_canonical": {
+     "default": "",
+     "title": "Suggested Canonical",
+     "type": "string"
+    },
+    "alias_kind": {
+     "default": "",
+     "title": "Alias Kind",
+     "type": "string"
+    },
+    "evidence": {
+     "$ref": "#/$defs/Evidence"
+    },
+    "frequency": {
+     "default": 1,
+     "title": "Frequency",
+     "type": "integer"
+    }
+   },
+   "required": [
+    "kind",
+    "term"
+   ],
+   "title": "Proposal",
+   "type": "object"
+  },
+  "Tag": {
+   "properties": {
+    "key": {
+     "title": "Key",
+     "type": "string"
+    },
+    "value": {
+     "default": "unknown",
+     "title": "Value"
+    },
+    "scope": {
+     "default": "通用",
+     "enum": [
+      "通用",
+      "出境",
+      "国内",
+      "邮轮"
+     ],
+     "title": "Scope",
+     "type": "string"
+    },
+    "origin": {
+     "default": "rule",
+     "enum": [
+      "rule",
+      "llm",
+      "aux"
+     ],
+     "title": "Origin",
+     "type": "string"
+    },
+    "evidence": {
+     "$ref": "#/$defs/Evidence"
+    },
+    "review": {
+     "default": "auto_accepted",
+     "enum": [
+      "auto_accepted",
+      "needs_review",
+      "confirmed",
+      "corrected"
+     ],
+     "title": "Review",
+     "type": "string"
+    },
+    "cardinality": {
+     "default": "single",
+     "enum": [
+      "single",
+      "multi"
+     ],
+     "title": "Cardinality",
+     "type": "string"
+    },
+    "note": {
+     "default": "",
+     "title": "Note",
+     "type": "string"
+    }
+   },
+   "required": [
+    "key"
+   ],
+   "title": "Tag",
+   "type": "object"
+  },
+  "TaggedWith": {
+   "properties": {
+    "main_rules": {
+     "default": "",
+     "title": "Main Rules",
+     "type": "string"
+    },
+    "aux_rules": {
+     "default": "",
+     "title": "Aux Rules",
+     "type": "string"
+    },
+    "vocab": {
+     "default": "",
+     "title": "Vocab",
+     "type": "string"
+    },
+    "aliases": {
+     "default": "",
+     "title": "Aliases",
+     "type": "string"
+    },
+    "lookups": {
+     "default": "",
+     "title": "Lookups",
+     "type": "string"
+    },
+    "prompt": {
+     "default": "",
+     "title": "Prompt",
+     "type": "string"
+    },
+    "model": {
+     "default": "",
+     "title": "Model",
+     "type": "string"
+    },
+    "parser_schema": {
+     "default": "",
+     "title": "Parser Schema",
+     "type": "string"
+    },
+    "parser": {
+     "default": "",
+     "title": "Parser",
+     "type": "string"
+    }
+   },
+   "title": "TaggedWith",
+   "type": "object"
+  }
+ },
+ "properties": {
+  "schema": {
+   "const": "route-tags/1",
+   "default": "route-tags/1",
+   "title": "Schema",
+   "type": "string"
+  },
+  "code": {
+   "default": "",
+   "title": "Code",
+   "type": "string"
+  },
+  "sha256": {
+   "default": "",
+   "title": "Sha256",
+   "type": "string"
+  },
+  "listed_name": {
+   "default": "",
+   "title": "Listed Name",
+   "type": "string"
+  },
+  "market": {
+   "default": "unknown",
+   "enum": [
+    "出境",
+    "国内",
+    "unknown"
+   ],
+   "title": "Market",
+   "type": "string"
+  },
+  "product_type": {
+   "default": "unknown",
+   "title": "Product Type",
+   "type": "string"
+  },
+  "route": {
+   "items": {
+    "$ref": "#/$defs/Tag"
+   },
+   "title": "Route",
+   "type": "array"
+  },
+  "departures": {
+   "items": {
+    "$ref": "#/$defs/DepartureTags"
+   },
+   "title": "Departures",
+   "type": "array"
+  },
+  "proposals": {
+   "items": {
+    "$ref": "#/$defs/Proposal"
+   },
+   "title": "Proposals",
+   "type": "array"
+  },
+  "conflicts": {
+   "items": {
+    "additionalProperties": true,
+    "type": "object"
+   },
+   "title": "Conflicts",
+   "type": "array"
+  },
+  "mismatches": {
+   "items": {
+    "additionalProperties": true,
+    "type": "object"
+   },
+   "title": "Mismatches",
+   "type": "array"
+  },
+  "shadow": {
+   "items": {
+    "additionalProperties": true,
+    "type": "object"
+   },
+   "title": "Shadow",
+   "type": "array"
+  },
+  "issues": {
+   "items": {
+    "additionalProperties": true,
+    "type": "object"
+   },
+   "title": "Issues",
+   "type": "array"
+  },
+  "stale": {
+   "default": false,
+   "title": "Stale",
+   "type": "boolean"
+  },
+  "stale_reasons": {
+   "items": {
+    "type": "string"
+   },
+   "title": "Stale Reasons",
+   "type": "array"
+  },
+  "tagged_with": {
+   "$ref": "#/$defs/TaggedWith"
+  },
+  "tagged_at": {
+   "default": "",
+   "title": "Tagged At",
+   "type": "string"
+  }
+ },
+ "title": "RouteTags",
+ "type": "object",
+ "$comment": "route-tags/1: structured labels computed from a route-kit/1 record, reviewed before use"
+}

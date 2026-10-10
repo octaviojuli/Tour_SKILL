@@ -1,0 +1,15 @@
+# Auxiliary rules: proposed by the skill from correction patterns, confirmed by a person.
+# Each rule may only assign a word that already exists in the vocabulary, never a new one.
+# status: shadow (computed, not stored on the live record) | live | retired
+# `version` is bumped by the tooling on every change; it never touches main.yaml.
+version: 1
+rules: []
+# Example of the shape (not active):
+# - id: aux-guoqing-late-departure
+#   auxiliary: true
+#   status: shadow
+#   target: {table: departure, key: holiday, value: 国庆}
+#   when:
+#     - {feature: departure.month_day, op: between, value: ["10-08", "10-09"]}
+#     - {feature: route.days_count, op: ">=", value: 3}
+#   origin: {from: corrections, cases: 7, rate: 0.71, proposed_at: "2026-10-10"}
