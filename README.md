@@ -6,7 +6,7 @@
 
 | 技能 | 目录 | 作用 |
 |---|---|---|
-| tour-route-parser | [`tour-route-parser/`](tour-route-parser/) | 把供应商行程附件（PDF/DOCX）整理成带原文依据的线路 JSON、详情页和审核报告，供人工审核后发布 |
+| tour-route-parser | [`tour-route-parser/`](tour-route-parser/) | 把供应商行程附件（PDF/DOCX）整理成带原文依据的线路 JSON、详情页和审核报告；可选的标签阶段再生成检索用的结构化标签（`route-tags/1`），人工审核后发布 |
 | sri-lanka-eta | [`sri-lanka-eta/`](sri-lanka-eta/) | 用 Playwright 自动填写斯里兰卡 ETA 旅游个人签证表单，停在 Review 页由人工确认 |
 
 ## 新增技能
