@@ -1,0 +1,46 @@
+name: tour-route-parser
+
+on:
+  push:
+    branches: [main]
+    paths: ["tour-route-parser/**", ".github/workflows/tour-route-parser.yml"]
+  pull_request:
+    paths: ["tour-route-parser/**", ".github/workflows/tour-route-parser.yml"]
+  workflow_dispatch:
+
+defaults:
+  run:
+    working-directory: tour-route-parser
+
+jobs:
+  unit:
+    # Everything on fakes and fixtures, plus the offline SDK-signature check.
+    # Installs from pyproject.toml, so the SDK version tested is the one users get.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends poppler-utils
+      - run: pip install ".[vision]" pytest
+      - run: python -c "import anthropic; print('anthropic', anthropic.__version__)"
+      - run: python -m pytest tests -q -m "not live"
+
+  live:
+    # One real model call through Model.ask. Needs repository secrets ANTHROPIC_API_KEY and
+    # ROUTE_KIT_MODEL (ANTHROPIC_BASE_URL optional, for an Anthropic-compatible proxy).
+    # ROUTE_KIT_REQUIRE_LIVE=1 turns missing secrets into a failure instead of a skip.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install . pytest
+      - run: python -m pytest tests -q -m live -rs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_BASE_URL: ${{ secrets.ANTHROPIC_BASE_URL }}
+          ROUTE_KIT_MODEL: ${{ secrets.ROUTE_KIT_MODEL }}
+          ROUTE_KIT_REQUIRE_LIVE: "1"
